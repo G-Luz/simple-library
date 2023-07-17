@@ -1,0 +1,469 @@
+openapi: "3.0.0"
+
+info:
+  title: GLuz Library
+  version: "1.0"
+  description: "API reference of the study Library project."
+
+servers:
+  - url: http://localhost:8080/
+
+tags:
+  - name: "Author"
+  - name: "Book"
+
+paths:
+  /v1/author/save:
+    post:
+      tags:
+        - "Author"
+      description: Registered new Author in database.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                birthdate:
+                  type: string
+                email:
+                  type: string
+      responses:
+        "200":
+          description: Successfully registered author
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully registered author
+
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Failed in register author
+
+  /v1/author:
+    get:
+      tags:
+        - "Author"
+      description: Retrieve authors.
+      responses:
+        "200":
+          description: Response will returns all authors registered in database.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in fetch authors data
+                  data:
+                    type: array
+                    items:
+                      type: object
+
+        "400":
+          description: Bad request or error in fetching authors data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad request
+                    
+
+  /v1/author/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Fetch author data with author id in request param ({id})
+        schema:
+          type: string
+    get:
+      tags:
+        - "Author"
+      description: Retrieve authors by ID.
+      responses:
+        "200":
+          description: Retrieve authors using ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in fetch author data
+                  data:
+                    type: object
+        "400":
+          description: Bad request or author id doesn't exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad request
+
+  /v1/author/editing/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Update authors data using ID
+        schema:
+          type: string
+    put:
+      tags:
+        - "Author"
+      description: Editing/Update author's data.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id: 
+                  type: integer
+                name:
+                  type: string
+                birthdate:
+                  type: string
+                email:
+                  type: string
+      responses:
+        "200":
+          description: Successfully in update author data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in update author data
+        "400":
+                  description: Bad request | Error in trying update author data | Author id doesn't exist
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          code:
+                            type: integer
+                            example: 400
+                          message:
+                            type: string
+                            example: Bad request
+                  
+                  
+  /v1/author/delete/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Remove author data using ID
+        schema:
+          type: string
+    delete:
+      tags:
+        - "Author"
+      description: Delete author data.
+      responses:
+        "200":
+          description: Successfully in deleted author data 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in deleted author data 
+        "400":
+          description: Bad request or error in trying remove author data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad request
+
+
+  /v1/book/save:
+    post:
+      tags:
+        - "Book"
+      description: Registered new Book in database.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                isbn:
+                  type: string
+                totalPages:
+                  type: integer
+                gender:
+                  type: string
+                authorId:
+                  type: integer
+                
+      responses:
+        "200":
+          description: Successfully registered book
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully registered book
+
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Failed in register book
+
+  /v1/book:
+    get:
+      tags:
+        - "Book"
+      description: Retrieve books.
+      responses:
+        "200":
+          description: Response will returns all books registered in database.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in fetch books data
+                  data:
+                    type: array
+                    items:
+                      type: object
+
+        "400":
+          description: Bad request or error in fetching authors data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad request
+                    
+
+  /v1/book/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Fetch book data with book id in request param ({id})
+        schema:
+          type: string
+    get:
+      tags:
+        - "Book"
+      description: Retrieve authors by ID.
+      responses:
+        "200":
+          description: Retrieve authors using ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in fetch book data
+                  data:
+                    type: object
+        "400":
+          description: Bad request or book id doesn't exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad request
+
+  /v1/book/editing/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Update authors data using ID
+        schema:
+          type: string
+    put:
+      tags:
+        - "Book"
+      description: Editing/Update book's data.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id: 
+                  type: integer
+                name:
+                  type: string
+                isbn:
+                  type: string
+                totalPages:
+                  type: integer
+                gender:
+                  type: string
+                authorId:
+                  type: integer
+      responses:
+        "200":
+          description: Successfully in update book data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in update book data
+        "400":
+                  description: Bad request | Error in trying update book data | Book id doesn't exist
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+                        properties:
+                          code:
+                            type: integer
+                            example: 400
+                          message:
+                            type: string
+                            example: Bad request
+                  
+                  
+  /v1/book/delete/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Remove book data using ID
+        schema:
+          type: string
+    delete:
+      tags:
+        - "Book"
+      description: Delete book data.
+      responses:
+        "200":
+          description: Successfully in deleted book data 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully in deleted book data 
+        "400":
+          description: Bad request or error in trying remove book data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Bad request
+
